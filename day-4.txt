@@ -1,0 +1,225 @@
+mysql> desc employees;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| EMPID     | char(5)     | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(30) | YES  |     | NULL    |       |
+| LASTNAME  | varchar(50) | YES  |     | NULL    |       |
+| AGE       | int         | YES  |     | NULL    |       |
+| DOJ       | date        | YES  |     | NULL    |       |
+| ADRESS    | tinytext    | YES  |     | NULL    |       |
+| DEPT      | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert into employees ('emp01','sankar','bhavani',22,'12-04-2026','vizag','it')
+    -> values
+    -> ^C
+mysql> insert into employees(empid,firstname,lastname,age,doj,adress,dept)
+    -> values
+    -> ('emp01','bhavani','sankar',22,'12-04-2026','vizag','it');
+ERROR 1292 (22007): Incorrect date value: '12-04-2026' for column 'DOJ' at row 1
+mysql> ^C
+mysql> insert into employees(empid,firstname,lastname,age,doj,adress,dept)
+    -> values
+    -> ('emp01','bhavani','sankar',22,'2026-04-12','vizag','it');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select*from employees;
++-------+-----------+----------+------+------------+--------+------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS | DEPT |
++-------+-----------+----------+------+------------+--------+------+
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag  | it   |
++-------+-----------+----------+------+------------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into employees(empid,firstname,lastname,age,doj,adress,dept)
+    -> values
+    -> ('emp01','bhavani','sankar',22,'2026-04-12','vizag','it'),
+    -> ('emp02','sk','basheer',23,'2026-04-15','hyd','hr');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select*from employees;
++-------+-----------+----------+------+------------+--------+------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS | DEPT |
++-------+-----------+----------+------+------------+--------+------+
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag  | it   |
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag  | it   |
+| emp02 | sk        | basheer  |   23 | 2026-04-15 | hyd    | hr   |
++-------+-----------+----------+------+------------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into employees(empid,firstname,lastname,age,doj,adress,dept)
+    -> values
+    -> ('emp03','a','jaggu',24,'2026-05-22','ank','office');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from employees;
++-------+-----------+----------+------+------------+--------+--------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS | DEPT   |
++-------+-----------+----------+------+------------+--------+--------+
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag  | it     |
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag  | it     |
+| emp02 | sk        | basheer  |   23 | 2026-04-15 | hyd    | hr     |
+| emp03 | a         | jaggu    |   24 | 2026-05-22 | ank    | office |
++-------+-----------+----------+------+------------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select*from employees;
++-------+-----------+----------+------+------------+---------+---------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS  | DEPT    |
++-------+-----------+----------+------+------------+---------+---------+
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag   | it      |
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag   | it      |
+| emp02 | sk        | basheer  |   23 | 2026-04-15 | hyd     | hr      |
+| emp03 | a         | jaggu    |   24 | 2026-05-22 | ank     | office  |
+| emp05 | sai       | durga    |   20 | 2026-04-25 | nrpm    | it      |
+| emp06 | bhanu     | bhai     |   21 | 2026-05-30 | vjy     | finence |
+| emp07 | hemu      | bittu    |   19 | 2026-06-07 | delhi   | hr      |
+| emp08 | allu      | arjun    | NULL | 2025-05-06 | benglur | NULL    |
+| emp09 | NULL      | prabhash | NULL | 2022-04-09 | NULL    | mumbai  |
+| emp10 | kinthali  | akhi     |   20 | 2026-07-25 | vizag   | sales   |
++-------+-----------+----------+------+------------+---------+---------+
+10 rows in set (0.00 sec)
+
+mysql> update employees set age=24 where firstname='sai';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> selct*from employees where empid=emp05;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct*from employees where empid=emp05' at line 1
+mysql> ^C
+mysql> selct*from employees where empid='emp05';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct*from employees where empid='emp05'' at line 1
+mysql> ^C
+mysql> select*from employees where empid=emp05;
+ERROR 1054 (42S22): Unknown column 'emp05' in 'where clause'
+mysql> ^C
+mysql> select*from employees where empid='emp05';
++-------+-----------+----------+------+------------+--------+------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS | DEPT |
++-------+-----------+----------+------+------------+--------+------+
+| emp05 | sai       | durga    |   24 | 2026-04-25 | nrpm   | it   |
++-------+-----------+----------+------+------------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> upadate employees set dept='devlopment' where  age=24;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'upadate employees set dept='devlopment' where  age=24' at line 1
+mysql> ^C
+mysql> update employees set dept='devlopment' where  age=24;
+Query OK, 2 rows affected (0.02 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select*from employees age=24;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=24' at line 1
+mysql> ^C
+mysql> select*from employees where age=24;
++-------+-----------+----------+------+------------+--------+------------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS | DEPT       |
++-------+-----------+----------+------+------------+--------+------------+
+| emp03 | a         | jaggu    |   24 | 2026-05-22 | ank    | devlopment |
+| emp05 | sai       | durga    |   24 | 2026-04-25 | nrpm   | devlopment |
++-------+-----------+----------+------+------------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> update employees set firstname='mani' where empid='emp08';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from employees where empid='emp08';
++-------+-----------+----------+------+------------+---------+------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS  | DEPT |
++-------+-----------+----------+------+------------+---------+------+
+| emp08 | mani      | arjun    | NULL | 2025-05-06 | benglur | NULL |
++-------+-----------+----------+------+------------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> update employees set lastname='allu' where dept='noida';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select*from employees where lastname='allu';
+Empty set (0.00 sec)
+
+mysql> select*from emplyees;
+ERROR 1146 (42S02): Table 'pfs7.emplyees' doesn't exist
+mysql> 'emp08','allu','arjun','2025-05-06','admin');^C
+mysql> ^C
+mysql> select*from employees;
++-------+-----------+----------+------+------------+---------+------------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS  | DEPT       |
++-------+-----------+----------+------+------------+---------+------------+
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag   | it         |
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag   | it         |
+| emp02 | sk        | basheer  |   23 | 2026-04-15 | hyd     | hr         |
+| emp03 | a         | jaggu    |   24 | 2026-05-22 | ank     | devlopment |
+| emp05 | sai       | durga    |   24 | 2026-04-25 | nrpm    | devlopment |
+| emp06 | bhanu     | bhai     |   21 | 2026-05-30 | vjy     | finence    |
+| emp07 | hemu      | bittu    |   19 | 2026-06-07 | delhi   | hr         |
+| emp08 | mani      | arjun    | NULL | 2025-05-06 | benglur | NULL       |
+| emp09 | NULL      | prabhash | NULL | 2022-04-09 | NULL    | mumbai     |
+| emp10 | kinthali  | akhi     |   20 | 2026-07-25 | vizag   | sales      |
++-------+-----------+----------+------+------------+---------+------------+
+10 rows in set (0.00 sec)
+
+mysql> delete from employees where firstname='sai';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from employees where empid='emp07';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from employees;
++-------+-----------+----------+------+------------+---------+------------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS  | DEPT       |
++-------+-----------+----------+------+------------+---------+------------+
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag   | it         |
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag   | it         |
+| emp02 | sk        | basheer  |   23 | 2026-04-15 | hyd     | hr         |
+| emp03 | a         | jaggu    |   24 | 2026-05-22 | ank     | devlopment |
+| emp06 | bhanu     | bhai     |   21 | 2026-05-30 | vjy     | finence    |
+| emp08 | mani      | arjun    | NULL | 2025-05-06 | benglur | NULL       |
+| emp09 | NULL      | prabhash | NULL | 2022-04-09 | NULL    | mumbai     |
+| emp10 | kinthali  | akhi     |   20 | 2026-07-25 | vizag   | sales      |
++-------+-----------+----------+------+------------+---------+------------+
+8 rows in set (0.00 sec)
+
+mysql> delete from employees where adress='ank';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from employees;
++-------+-----------+----------+------+------------+---------+---------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADRESS  | DEPT    |
++-------+-----------+----------+------+------------+---------+---------+
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag   | it      |
+| emp01 | bhavani   | sankar   |   22 | 2026-04-12 | vizag   | it      |
+| emp02 | sk        | basheer  |   23 | 2026-04-15 | hyd     | hr      |
+| emp06 | bhanu     | bhai     |   21 | 2026-05-30 | vjy     | finence |
+| emp08 | mani      | arjun    | NULL | 2025-05-06 | benglur | NULL    |
+| emp09 | NULL      | prabhash | NULL | 2022-04-09 | NULL    | mumbai  |
+| emp10 | kinthali  | akhi     |   20 | 2026-07-25 | vizag   | sales   |
++-------+-----------+----------+------+------------+---------+---------+
+7 rows in set (0.00 sec)
+
+use pfs7;
+insert into employees values
+('emp05','sai','durga',20,'2026-04-25','nrpm','it');
+select*from employees;
+
+insert into employees values
+('emp06','bhanu','bhai',21,'2026-05-30','vjy','finence'),
+('emp07','hemu','bittu',19,'2026-06-07','delhi','hr');
+
+select*from employees;
+
+insert into employees(empid,firstname,lastname,doj,adress)
+values
+('emp08','allu','arjun','2025-05-06','benglur');
+select*from employees;
+
+insert into employees(empid,lastname,doj,dept)
+values
+('emp09','prabhash','2022-04-09','mumbai');
+
+
+select*from employees;
